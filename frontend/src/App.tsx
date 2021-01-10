@@ -6,6 +6,7 @@ import {
 	Vector3
 } from '@babylonjs/core';
 import React from 'react';
+import { NumberInput } from 'carbon-components-react';
 import './App.scss';
 import { SceneComponent } from './SceneComponent';
 
@@ -50,6 +51,7 @@ function App() {
 				id='my-canvas' />
 			<div className='controls'>
 				World
+				<NumberInput id='width' value={200} />
 			</div>
 		</div>
 	);

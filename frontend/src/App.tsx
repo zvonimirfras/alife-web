@@ -6,8 +6,8 @@ import {
 	Vector3
 } from '@babylonjs/core';
 import React from 'react';
-import { NumberInput } from 'carbon-components-react';
 import './App.scss';
+import { Controls } from './Controls';
 import { SceneComponent } from './SceneComponent';
 
 let box: Mesh;
@@ -49,10 +49,7 @@ function App() {
 				onSceneReady={onSceneReady}
 				onRender={onRender}
 				id='my-canvas' />
-			<div className='controls'>
-				World
-				<NumberInput id='width' value={200} />
-			</div>
+			<Controls />
 		</div>
 	);
 }

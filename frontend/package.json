@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@babylonjs/core": "^4.2.0",
+		"@carbon/icons-react": "^10.23.0",
 		"@testing-library/jest-dom": "^5.11.8",
 		"@testing-library/react": "^11.2.3",
 		"@testing-library/user-event": "^12.6.0",
@@ -46,6 +47,7 @@
 		]
 	},
 	"devDependencies": {
-		"@types/carbon-components-react": "^7.25.1"
+		"@types/carbon-components-react": "^7.25.1",
+		"@types/carbon__icons-react": "^10.21.0"
 	}
 }

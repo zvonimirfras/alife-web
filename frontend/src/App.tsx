@@ -5,10 +5,13 @@ import {
 	MeshBuilder,
 	Vector3
 } from '@babylonjs/core';
-import React from 'react';
+import React, { useState } from 'react';
+import { Menu32 } from '@carbon/icons-react';
+
 import './App.scss';
 import { Controls } from './Controls';
 import { SceneComponent } from './SceneComponent';
+import { Button } from 'carbon-components-react';
 
 let box: Mesh;
 
@@ -41,15 +44,32 @@ const onRender = (scene: any) => {
 }
 
 function App() {
+	const [isMenuOpen, setIsMenuOpen] = useState(true);
+	const [shouldSceneResize, setShouldSceneResize] = useState(false);
+	
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+		setTimeout(() => setShouldSceneResize(true), 150); // after the animation
+	};
+
 	return (
 		<div className='app'>
 			<SceneComponent
-				className='scene'
+				className={'scene ' + (!isMenuOpen ? 'expand-scene' : '')}
 				antialias
 				onSceneReady={onSceneReady}
 				onRender={onRender}
+				shouldResize={shouldSceneResize}
+				setShouldResize={setShouldSceneResize}
 				id='my-canvas' />
-			<Controls />
+			<Controls className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')} />
+			<Button
+				className='menu-button'
+				kind='secondary'
+				renderIcon={Menu32}
+				iconDescription='Menu'
+				hasIconOnly
+				onClick={toggleMenu} />
 		</div>
 	);
 }

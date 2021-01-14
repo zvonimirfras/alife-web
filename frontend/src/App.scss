@@ -1,4 +1,30 @@
+$side-pane-width: 500px;
+
+button.bx--btn.bx--btn--icon-only.menu-button {
+	position: fixed;
+	top: 0;
+	right: 0;
+}
+
 .scene {
-	width: calc(100% - 500px);
+	width: calc(100% - #{$side-pane-width});
 	height: 100%;
+
+	transition: width 125ms;
+
+	&.expand-scene {
+		width: 100%;
+	}
+}
+
+.side-pane {
+	width: $side-pane-width;
+	position: absolute;
+    top: 0;
+	right: -$side-pane-width;
+	transition: right 125ms;
+	
+	&.menu-open {
+		right: 0;
+	}
 }

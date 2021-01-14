@@ -10,32 +10,44 @@ export const SceneComponent = (props: any) => {
 		sceneOptions,
 		onRender,
 		onSceneReady,
+		shouldResize,
+		setShouldResize,
 		...rest
 	} = props;
 
+	const engine: React.MutableRefObject<Engine | null> = useRef<Engine>(null);
+	const scene: React.MutableRefObject<Scene | null> = useRef<Scene>(null);
+
+	const resize = () => {
+		if (scene.current) {
+			scene.current.getEngine().resize();
+		}
+	}
+
 	useEffect(() => {
 		if (reactCanvas.current) {
-			const engine = new Engine(reactCanvas.current, antialias, engineOptions, adaptToDeviceRatio);
-			const scene = new Scene(engine, sceneOptions);
-			if (scene.isReady()) {
-				onSceneReady(scene)
+			engine.current = new Engine(reactCanvas.current, antialias, engineOptions, adaptToDeviceRatio);
+			scene.current = new Scene(engine.current, sceneOptions);
+			if (scene.current.isReady()) {
+				onSceneReady(scene.current)
 			} else {
-				scene.onReadyObservable.addOnce(scene => onSceneReady(scene));
+				scene.current.onReadyObservable.addOnce(scene => onSceneReady(scene));
 			}
-			engine.runRenderLoop(() => {
+			engine.current.runRenderLoop(() => {
 				if (typeof onRender === 'function') {
-					onRender(scene);
+					onRender(scene.current);
 				}
-				scene.render();
+				if (scene.current) {
+					scene.current.render();
+				}
 			})
-			const resize = () => {
-				scene.getEngine().resize();
-			}
 			if (window) {
 				window.addEventListener('resize', resize);
 			}
 			return () => {
-				scene.getEngine().dispose();
+				if (scene.current) {
+					scene.current.getEngine().dispose();
+				}
 				if (window) {
 					window.removeEventListener('resize', resize);
 				}
@@ -50,6 +62,13 @@ export const SceneComponent = (props: any) => {
 		reactCanvas,
 		sceneOptions
 	]);
+
+	useEffect(() => {
+		if (shouldResize) {
+			resize();
+			setShouldResize(false);
+		}
+	}, [shouldResize, setShouldResize]);
 	return (
 		<canvas ref={reactCanvas} {...rest} />
 	);

@@ -47,8 +47,8 @@ export const InhabitantSettings = ({
 	</div>;
 };
 
-export const Controls = () => {
-	return <div className='controls'>
+export const Controls = ({className, ...rest}: any) => {
+	return <div className={'controls ' + className} {...rest}>
 		<NumberInput
 			id='world-width'
 			value={200}

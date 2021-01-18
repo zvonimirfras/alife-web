@@ -1,5 +1,12 @@
-import { Engine, Scene } from '@babylonjs/core';
+import {
+	CannonJSPlugin,
+	Engine,
+	Scene,
+	Vector3
+} from '@babylonjs/core';
 import React, { useEffect, useRef } from 'react';
+
+(global as any).CANNON = require('cannon'); // fixes `ReferenceError: CANNON is not defined` runtime error
 
 export const SceneComponent = (props: any) => {
 	const reactCanvas = useRef(null);
@@ -28,6 +35,11 @@ export const SceneComponent = (props: any) => {
 		if (reactCanvas.current) {
 			engine.current = new Engine(reactCanvas.current, antialias, engineOptions, adaptToDeviceRatio);
 			scene.current = new Scene(engine.current, sceneOptions);
+			const gravityVector = new Vector3(0, -9.806, 0);
+			const physicsPlugin = new CannonJSPlugin();
+
+			scene.current.enablePhysics(gravityVector, physicsPlugin);
+
 			if (scene.current.isReady()) {
 				onSceneReady(scene.current)
 			} else {

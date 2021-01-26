@@ -1,5 +1,5 @@
 import {
-	FreeCamera,
+	ArcRotateCamera,
 	Vector3
 } from '@babylonjs/core';
 import React, { useState } from 'react';
@@ -15,9 +15,9 @@ let world: {current: World | undefined} = { current: undefined };
 
 const onSceneReady = (scene: any) => {
 	// This creates and positions a free camera (non-mesh)
-	const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
-	// This targets the camera to scene origin
-	camera.setTarget(Vector3.Zero());
+	const camera = new ArcRotateCamera('camera1', 0, 1, 15, new Vector3(0, 0, 0), scene);
+	camera.maxZ = 150;
+
 	const canvas = scene.getEngine().getRenderingCanvas();
 	world.current = new World(scene);
 

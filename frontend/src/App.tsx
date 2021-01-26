@@ -1,9 +1,5 @@
 import {
 	FreeCamera,
-	HemisphericLight,
-	Mesh,
-	MeshBuilder,
-	PhysicsImpostor,
 	Vector3
 } from '@babylonjs/core';
 import React, { useState } from 'react';
@@ -13,8 +9,9 @@ import './App.scss';
 import { Controls } from './Controls';
 import { SceneComponent } from './SceneComponent';
 import { Button } from 'carbon-components-react';
+import { World } from './world/world';
 
-let box: Mesh;
+let world: {current: World | undefined} = { current: undefined };
 
 const onSceneReady = (scene: any) => {
 	// This creates and positions a free camera (non-mesh)
@@ -22,28 +19,20 @@ const onSceneReady = (scene: any) => {
 	// This targets the camera to scene origin
 	camera.setTarget(Vector3.Zero());
 	const canvas = scene.getEngine().getRenderingCanvas();
+	world.current = new World(scene);
+
 	// This attaches the camera to the canvas
 	camera.attachControl(canvas, true);
-	// This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-	const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
-	// Default intensity is 1. Let's dim the light a small amount
-	light.intensity = 0.7;
-	// Our built-in 'box' shape.
-	box = MeshBuilder.CreateBox("box", { size: 2 }, scene);
-	// Move the box upward 1/2 its height
-	box.position.y = 2;
-	// Our built-in 'ground' shape.
-	const ground = MeshBuilder.CreateGround("ground", { width: 6, height: 6 }, scene);
-
-	box.physicsImpostor = new PhysicsImpostor(box, PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0.9 }, scene);
-	ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
 }
 
 const onRender = (scene: any) => {
-	if (box !== undefined) {
+	// if (box !== undefined) {
 		// const deltaTimeInMillis = scene.getEngine().getDeltaTime();
 		// const rpm = 10;
 		// box.rotation.y += ((rpm / 60) * Math.PI * 2 * (deltaTimeInMillis / 1000));
+	// }
+	if (world.current) {
+		world.current.step();
 	}
 }
 
@@ -66,7 +55,9 @@ function App() {
 				shouldResize={shouldSceneResize}
 				setShouldResize={setShouldSceneResize}
 				id='my-canvas' />
-			<Controls className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')} />
+			<Controls
+				className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')}
+				world={world} />
 			<Button
 				className='menu-button'
 				kind='secondary'

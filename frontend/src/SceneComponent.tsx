@@ -37,6 +37,7 @@ export const SceneComponent = (props: any) => {
 			scene.current = new Scene(engine.current, sceneOptions);
 			const gravityVector = new Vector3(0, -9.806, 0);
 			const physicsPlugin = new CannonJSPlugin();
+			physicsPlugin.setTimeStep(1/30);
 
 			scene.current.enablePhysics(gravityVector, physicsPlugin);
 

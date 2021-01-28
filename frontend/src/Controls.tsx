@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Button,
 	NumberInput,
@@ -58,19 +58,24 @@ export const InhabitantSettings = ({
 };
 
 export const Controls = ({className, world, ...rest}: any) => {
+	const [size, setSize] = useState([20, 20]);
+
 	const createBorder = () => {
-		// TODO get size from UI
-		world.current.createBorder(new Vector2(20, 20));
+		world.current.createBorder(new Vector2(size[0], size[1]));
 	};
 
 	return <div className={'controls ' + className} {...rest}>
 		<NumberInput
 			id='world-width'
-			value={20}
+			value={size[0]}
+			min={1}
+			onChange={(event) => setSize([Number((event as any).imaginaryTarget.value), size[1]])}
 			label='Width'/>
 		<NumberInput
 			id='world-height'
-			value={20}
+			min={1}
+			value={size[1]}
+			onChange={(event) => setSize([size[0], Number((event as any).imaginaryTarget.value)])}
 			label='Height'/>
 		<Button>Clear inhabitants</Button>
 		<Button onClick={createBorder}>Create</Button>

@@ -78,13 +78,13 @@ export class World {
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
-		wall = MeshBuilder.CreateBox("wall3", { width: wallThickness, height: wallHeight, depth: size.x }, this.scene);
+		wall = MeshBuilder.CreateBox("wall3", { width: wallThickness, height: wallHeight, depth: size.y }, this.scene);
 		wall.position = new Vector3((size.x - wallThickness)/2, wallY, 0);
 		wall.physicsImpostor = newWallImposter();
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
-		wall = MeshBuilder.CreateBox("wall4", { width: wallThickness, height: wallHeight, depth: size.x }, this.scene);
+		wall = MeshBuilder.CreateBox("wall4", { width: wallThickness, height: wallHeight, depth: size.y }, this.scene);
 		wall.position = new Vector3((-size.x + wallThickness)/2, wallY, 0);
 		wall.physicsImpostor = newWallImposter();
 		wall.material = wallMaterial;

@@ -1,5 +1,17 @@
 import { Creature } from './creature';
-import { Color3, DirectionalLight, Mesh, MeshBuilder, PhysicsImpostor, PhysicsImpostorParameters, Scene, ShadowGenerator, StandardMaterial, Vector2, Vector3 } from '@babylonjs/core';
+import {
+	Color3,
+	DirectionalLight,
+	Mesh,
+	MeshBuilder,
+	PhysicsImpostor,
+	PhysicsImpostorParameters,
+	Scene,
+	ShadowGenerator,
+	StandardMaterial,
+	Vector2,
+	Vector3
+} from '@babylonjs/core';
 
 export class World {
 	scene: Scene;
@@ -28,6 +40,10 @@ export class World {
 	}
 
 	clearInhabitants() {
+		for (let i = 0; i < this.population.length; i++) {
+			const creature = this.population[i];
+			creature.destroy();
+		}
 		this.population = [];
 	}
 

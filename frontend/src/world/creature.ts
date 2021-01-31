@@ -58,7 +58,15 @@ export class Creature {
 		return false;
 	}
 
-	create() {
+	create(creatureConfig: CreatureConfiguration) {
 		console.log('You need to implement `create()` function when you subclass.');
+	}
+
+	destroy() {
+		if (this.body) {
+			this.world.scene.removeMesh(this.body);
+			this.body.dispose();
+			this.body = undefined;
+		}
 	}
 };

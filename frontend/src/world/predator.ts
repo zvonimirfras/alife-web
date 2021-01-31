@@ -5,10 +5,10 @@ import {
 	PhysicsImpostor
 } from '@babylonjs/core';
 
-export class Herbivore extends Creature {
+export class Predator extends Creature {
 	create(creatureConfig: CreatureConfiguration) {
 		const faceColors: Color4[] = [];
-		faceColors[4] = new Color4(0, 0, 1, 0);
+		faceColors[4] = new Color4(1, 0, 0, 0);
 		this.body = MeshBuilder.CreateBox("box", { width: 2, height: 0.1, depth: 2, faceColors }, this.world.scene);
 		this.body.position.y = 0.1;
 		this.body.physicsImpostor = new PhysicsImpostor(this.body, PhysicsImpostor.BoxImpostor, { mass: 1, restitution: 0.9, friction: 0.05 }, this.world.scene);
@@ -19,6 +19,7 @@ export class Herbivore extends Creature {
 	explore() {
 		const torque = 1 * (this.body?.physicsImpostor?.mass || 0);
 	
+		console.log("explore")
 		if (Math.random() < 0.1 ) // 1 in 10 chance
 		{
 			this.turn(Math.random() > 0.5 ? torque : -torque);

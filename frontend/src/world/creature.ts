@@ -21,6 +21,10 @@ export class Creature {
 
 	world: World;
 	body: Mesh | undefined;
+	// some defaults
+	maxAge = 100;
+	energy = 100;
+	mutationRate = 0.0001;
 
 	isParalyzed() {
 		// TODO
@@ -60,6 +64,17 @@ export class Creature {
 
 	create(creatureConfig: CreatureConfiguration) {
 		console.log('You need to implement `create()` function when you subclass.');
+	}
+
+	init(creatureConfig: CreatureConfiguration) {
+		if (this.body) {
+			this.body.position.x = creatureConfig.position ? creatureConfig.position.x : 0;
+			this.body.position.y = creatureConfig.position ? creatureConfig.position.y : 0;
+		}
+
+		this.maxAge = creatureConfig.maxAge;
+		this.mutationRate = creatureConfig.mutationRate;
+		this.energy = creatureConfig.energy;
 	}
 
 	destroy() {

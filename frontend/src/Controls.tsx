@@ -14,6 +14,13 @@ import { Plant } from './world/plant';
 import { Predator } from './world/predator';
 import { CreatureConfiguration } from './world/creature';
 
+const randomPosition = (worldSize: Vector2, creatureSize: number) => {
+	return new Vector2(
+		Math.random() * (worldSize.x - 2 * creatureSize) - (worldSize.x - 2 * creatureSize) / 2,
+		Math.random() * (worldSize.y - 2 * creatureSize) - (worldSize.y - 2 * creatureSize) / 2
+	);
+};
+
 export const InhabitantSettings = ({
 	type,
 	world,
@@ -22,22 +29,32 @@ export const InhabitantSettings = ({
 }: any) => {
 	const create = () => {
 		for (let i = 0; i < config.count; i++) {
+			// TODO randomize configs based on mutation rate
 			switch (type) {
 				case 'plant': {
 					const plant = new Plant(world.current);
-					plant.create(config as CreatureConfiguration);
+					plant.create({
+						...config,
+						position: randomPosition(world.current.size, config.size)
+					} as CreatureConfiguration);
 					break;
 				}
 
 				case 'herbivore': {
 					const herbivore = new Herbivore(world.current);
-					herbivore.create(config as CreatureConfiguration);
+					herbivore.create({
+						...config,
+						position: randomPosition(world.current.size, config.size)
+					} as CreatureConfiguration);
 					break;
 				}
 
 				case 'predator': {
 					const predator = new Predator(world.current);
-					predator.create(config as CreatureConfiguration);
+					predator.create({
+						...config,
+						position: randomPosition(world.current.size, config.size)
+					} as CreatureConfiguration);
 					break;
 				}
 			

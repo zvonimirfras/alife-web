@@ -18,6 +18,7 @@ export class World {
 	population: Creature[] = [];
 	ground: Mesh | null = null;
 	walls: Mesh[] = [];
+	size = new Vector2(0, 0);
 
 	constructor(scene: Scene) {
 		this.scene = scene;
@@ -48,6 +49,7 @@ export class World {
 	}
 
 	createBorder(size: Vector2) {
+		this.size = size.clone();
 		// Our built-in 'ground' shape.
 		if (this.ground) {
 			this.scene.removeMesh(this.ground);

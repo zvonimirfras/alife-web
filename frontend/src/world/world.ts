@@ -111,8 +111,32 @@ export class World {
 		this.ground.receiveShadows = true;
 	}
 
+	updateNearBy() {
+		for (let i = 0; i < this.population.length; i++) {
+			const creature = this.population[i];
+			creature.nearByCreatures = [];
+		}
+
+		for (let i = 0; i < this.population.length; i++) {
+			const creature = this.population[i];
+			for (let j = i + 1; j < this.population.length; j++) {
+				const creature2 = this.population[j];
+				const distance = Vector3.Distance(creature.body?.position || new Vector3(), creature2.body?.position || new Vector3());
+				
+				if (distance < creature.sensorSize) {
+					creature.nearByCreatures.push(creature2);
+				}
+
+				if (distance < creature2.sensorSize) {
+					creature2.nearByCreatures.push(creature);
+				}
+			}
+		}
+	}
+
 	step() {
 		this.population.forEach(creature => {
+			this.updateNearBy();
 			creature.step();
 
 			if (creature.isDead()) {

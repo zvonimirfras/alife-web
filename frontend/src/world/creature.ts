@@ -22,6 +22,7 @@ export class Creature {
 
 	world: World;
 	body: Mesh | undefined;
+	nearByCreatures: Creature[] = [];
 	// some defaults
 	maxAge = 100;
 	energy = 100;
@@ -80,6 +81,7 @@ export class Creature {
 		this.maxAge = creatureConfig.maxAge;
 		this.mutationRate = creatureConfig.mutationRate;
 		this.energy = creatureConfig.energy;
+		this.sensorSize = creatureConfig.sensorSize;
 	}
 
 	destroy() {

@@ -23,6 +23,7 @@ export class Creature {
 	world: World;
 	body: Mesh | undefined;
 	nearByCreatures: Creature[] = [];
+	touchingCreatures: Creature[] = [];
 	// some defaults
 	maxAge = 100;
 	energy = 100;

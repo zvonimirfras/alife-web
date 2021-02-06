@@ -115,6 +115,7 @@ export class World {
 		for (let i = 0; i < this.population.length; i++) {
 			const creature = this.population[i];
 			creature.nearByCreatures = [];
+			creature.touchingCreatures = [];
 		}
 
 		for (let i = 0; i < this.population.length; i++) {
@@ -123,12 +124,19 @@ export class World {
 				const creature2 = this.population[j];
 				const distance = Vector3.Distance(creature.body?.position || new Vector3(), creature2.body?.position || new Vector3());
 				
+				// nearby
 				if (distance < creature.sensorSize) {
 					creature.nearByCreatures.push(creature2);
 				}
 
 				if (distance < creature2.sensorSize) {
 					creature2.nearByCreatures.push(creature);
+				}
+
+				// touching
+				if (creature2.body &&creature.body?.intersectsMesh(creature2.body)) {
+					creature.touchingCreatures.push(creature2);
+					creature2.touchingCreatures.push(creature);
 				}
 			}
 		}

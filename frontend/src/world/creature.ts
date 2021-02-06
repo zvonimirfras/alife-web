@@ -7,7 +7,8 @@ import {
 export interface CreatureConfiguration {
 	growthRate: number;
     maxAge: number;
-    size: number;
+	size: number;
+	sensorSize: number;
     energy: number;
     mutationRate: number;
     position: Vector3;
@@ -25,6 +26,10 @@ export class Creature {
 	maxAge = 100;
 	energy = 100;
 	mutationRate = 0.0001;
+	/**
+	 * distance from the object sensor creature can "see" another nearby creature
+	 */
+	sensorSize = 1; // initialized with create
 
 	isParalyzed() {
 		// TODO

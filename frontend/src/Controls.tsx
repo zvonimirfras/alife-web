@@ -44,6 +44,7 @@ export const InhabitantSettings = ({
 					const herbivore = new Herbivore(world.current);
 					herbivore.create({
 						...config,
+						sensorSize: config.size * 5,
 						position: randomPosition(world.current.size, config.size)
 					} as CreatureConfiguration);
 					break;
@@ -53,6 +54,7 @@ export const InhabitantSettings = ({
 					const predator = new Predator(world.current);
 					predator.create({
 						...config,
+						sensorSize: config.size * 10,
 						position: randomPosition(world.current.size, config.size)
 					} as CreatureConfiguration);
 					break;

@@ -20,8 +20,7 @@ export class Predator extends Creature {
 
 	explore() {
 		const torque = 1 * (this.body?.physicsImpostor?.mass || 0);
-	
-		console.log("explore")
+
 		if (Math.random() < 0.1 ) // 1 in 10 chance
 		{
 			this.turn(Math.random() > 0.5 ? torque : -torque);

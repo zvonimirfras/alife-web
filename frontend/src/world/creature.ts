@@ -59,6 +59,11 @@ export class Creature {
 		const forward = new Vector3(.707, 0, .707);
 		const direction = this.body?.getDirection(forward).clone().normalize() || forward;
 		this.body?.physicsImpostor?.applyImpulse(direction.multiplyByFloats(force, force, force), this.body?.getAbsolutePosition());
+		// E = (mv^2)/2
+		// v = at
+		// F = ma
+		// E = F^2 t^2 / (2m)
+		this.energy -= force * force / 3600 / 2 / (this.body?.physicsImpostor?.mass || 1);
 	}
 
 	step() {

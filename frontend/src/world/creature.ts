@@ -24,10 +24,14 @@ export class Creature {
 	body: Mesh | undefined;
 	nearByCreatures: Creature[] = [];
 	touchingCreatures: Creature[] = [];
+	age = 0;
+	reproductionTime = 0;
+	paralyzationTimer = 0;
 	// some defaults
 	maxAge = 100;
 	energy = 100;
 	mutationRate = 0.0001;
+	growthRate = 1;
 	/**
 	 * distance from the object sensor creature can "see" another nearby creature
 	 */
@@ -58,7 +62,14 @@ export class Creature {
 	}
 
 	step() {
-		// TODO rest of the step
+		this.grow();
+
+		this.age += 1.0/30;
+		this.reproductionTime += 1.0/30;
+		
+		if (this.isParalyzed()) {
+			this.paralyzationTimer -= 1.0/30;
+		}
 		this.explore();
 	}
 
@@ -67,6 +78,30 @@ export class Creature {
 	isDead() {
 		// TODO
 		return false;
+	}
+
+	grow(growthRate?: number) {
+		if (!growthRate) {
+			growthRate = this.growthRate;
+			growthRate = 1 + ( growthRate - 1 ) / ( (this.age > 1) ? Math.sqrt(this.age)/10 : 1 ); // reduce the decimal side of the growthRate
+		}
+    
+		const oldMass = this.body?.physicsImpostor?.mass || 0;
+		
+		if(growthRate < 1 && oldMass < 1) {
+			return;
+		}
+
+		const oldLinearVlocity = this.body?.physicsImpostor?.getLinearVelocity();
+		const oldAngularVelocity = this.body?.physicsImpostor?.getAngularVelocity();
+		if (this.body) {
+			this.body.scaling.multiplyInPlace(new Vector3(growthRate, growthRate, growthRate));
+			this.body.physicsImpostor?.forceUpdate();
+			this.body.physicsImpostor?.setLinearVelocity(oldLinearVlocity || null);
+			this.body.physicsImpostor?.setAngularVelocity(oldAngularVelocity || null);
+		}
+		
+		this.energy -= 10 * ((this.body?.physicsImpostor?.mass || oldMass) - oldMass);
 	}
 
 	create(creatureConfig: CreatureConfiguration) {

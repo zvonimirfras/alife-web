@@ -108,12 +108,19 @@ export class Creature {
 		this.energy -= 10 * ((this.body?.physicsImpostor?.mass || oldMass) - oldMass);
 	}
 
-	shrink(shrinkRate?: number)
-	{
+	shrink(shrinkRate?: number) {
 		if (!shrinkRate) {
 			shrinkRate = Math.pow(2 - this.growthRate, 2);
 		}
 		this.grow(shrinkRate);
+	}
+
+	takeEnergy(taker: Creature) {
+		const v = taker.body?.physicsImpostor?.getLinearVelocity() || new Vector3();
+		const speed = Math.sqrt(v.x * v.x + v.y * v.y);
+		const e = (taker.body?.physicsImpostor?.mass || 0) * speed + 10; // static part +10
+		this.energy -= e;
+		taker.energy += e;
 	}
 
 	create(creatureConfig: CreatureConfiguration) {

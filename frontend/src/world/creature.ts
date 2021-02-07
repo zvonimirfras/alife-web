@@ -76,8 +76,7 @@ export class Creature {
 	explore() {}
 
 	isDead() {
-		// TODO
-		return false;
+		return this.energy <= 0 || this.age >= this.maxAge;
 	}
 
 	grow(growthRate?: number) {

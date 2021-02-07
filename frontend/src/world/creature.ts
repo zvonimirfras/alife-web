@@ -108,6 +108,14 @@ export class Creature {
 		this.energy -= 10 * ((this.body?.physicsImpostor?.mass || oldMass) - oldMass);
 	}
 
+	shrink(shrinkRate?: number)
+	{
+		if (!shrinkRate) {
+			shrinkRate = Math.pow(2 - this.growthRate, 2);
+		}
+		this.grow(shrinkRate);
+	}
+
 	create(creatureConfig: CreatureConfiguration) {
 		console.log('You need to implement `create()` function when you subclass.');
 	}

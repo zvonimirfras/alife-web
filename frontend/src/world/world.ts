@@ -148,7 +148,7 @@ export class World {
 			creature.step();
 
 			if (creature.isDead()) {
-				// TODO remove from population etc
+				creature.destroy();
 			}
 		});
 	}

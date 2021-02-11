@@ -2,6 +2,7 @@
 	"name": "frontend",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "/alife/",
 	"dependencies": {
 		"@babylonjs/core": "^4.2.0",
 		"@carbon/icons-react": "^10.23.0",

@@ -67,32 +67,40 @@ export const InhabitantSettings = ({
 		<NumberInput
 			id={`${type}-inhabitant-settings-count`}
 			value={config?.count}
-			onChange={(event: any) => setConfig({ ...config, count: event.imaginaryTarget.value})}
+			min={1}
+			onChange={(event: any) => setConfig({ ...config, count: Number(event.imaginaryTarget.value)})}
 			label='Count'/>
 		<NumberInput
 			id={`${type}-inhabitant-settings-size`}
 			value={config?.size}
-			onChange={(event: any) => setConfig({ ...config, size: event.imaginaryTarget.value})}
+			min={0}
+			onChange={(event: any) => setConfig({ ...config, size: Number(event.imaginaryTarget.value)})}
 			label='Size'/>
 		<NumberInput
 			id={`${type}-inhabitant-settings-growth-rate`}
 			value={config?.growthRate}
-			onChange={(event: any) => setConfig({ ...config, growthRate: event.imaginaryTarget.value})}
+			min={0}
+			step={0.0001}
+			onChange={(event: any) => setConfig({ ...config, growthRate: Number(event.imaginaryTarget.value)})}
 			label='Growth rate'/>
 		<NumberInput
 			id={`${type}-inhabitant-settings-mutation-rate`}
 			value={config?.mutationRate}
-			onChange={(event: any) => setConfig({ ...config, mutationRate: event.imaginaryTarget.value})}
+			min={0}
+			step={0.05}
+			onChange={(event: any) => setConfig({ ...config, mutationRate: Number(event.imaginaryTarget.value)})}
 			label='Mutation rate'/>
 		<NumberInput
 			id={`${type}-inhabitant-settings-max-age`}
 			value={config?.maxAge}
-			onChange={(event: any) => setConfig({ ...config, maxAge: event.imaginaryTarget.value})}
+			min={0}
+			onChange={(event: any) => setConfig({ ...config, maxAge: Number(event.imaginaryTarget.value)})}
 			label='Max age'/>
 		<NumberInput
 			id={`${type}-inhabitant-settings-energy`}
 			value={config?.energy}
-			onChange={(event: any) => setConfig({ ...config, energy: event.imaginaryTarget.value})}
+			min={0}
+			onChange={(event: any) => setConfig({ ...config, energy: Number(event.imaginaryTarget.value)})}
 			label='Energy'/>
 		<Button
 		onClick={create}>

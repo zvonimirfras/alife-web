@@ -117,7 +117,7 @@ export const Controls = ({className, world, ...rest}: any) => {
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,
-		energy: 500
+		energy: 90
 	});
 	const [herbivoresConfig, setHerbivoresConfig] = useState({
 		count: 5,
@@ -125,7 +125,7 @@ export const Controls = ({className, world, ...rest}: any) => {
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,
-		energy: 500
+		energy: 90
 	});
 	const [predatorsConfig, setPredatorsConfig] = useState({
 		count: 5,
@@ -133,7 +133,7 @@ export const Controls = ({className, world, ...rest}: any) => {
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,
-		energy: 500
+		energy: 90
 	});
 
 	useEffect(() => {

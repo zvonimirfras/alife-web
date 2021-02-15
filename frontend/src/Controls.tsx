@@ -144,6 +144,8 @@ export const Controls = ({className, world, ...rest}: any) => {
 	};
 
 	return <div className={'controls ' + className} {...rest}>
+		<h4 className='world-title'>World</h4>
+
 		<NumberInput
 			id='world-width'
 			value={size[0]}
@@ -158,6 +160,9 @@ export const Controls = ({className, world, ...rest}: any) => {
 			label='Height'/>
 		<Button onClick={clearInhabitants}>Clear inhabitants</Button>
 		<Button onClick={createBorder}>Create</Button>
+
+		<h4 className='inhabitants-title'>Inhabitants</h4>
+		
 		<Tabs>
 			<Tab label='Plants'>
 				<InhabitantSettings

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	NumberInput,
@@ -127,6 +127,13 @@ export const Controls = ({className, world, ...rest}: any) => {
 		maxAge: 70,
 		energy: 500
 	});
+
+	useEffect(() => {
+		if (!world.current.ground || !world.current.walls.length) {
+			createBorder();
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [world]);
 
 	const clearInhabitants = () => {
 		world.current.clearInhabitants();

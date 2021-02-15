@@ -19,7 +19,15 @@ export class Plant extends Creature {
 	create(creatureConfig: CreatureConfiguration) {
 		const faceColors: Color4[] = [];
 		faceColors[2] = new Color4(0, 1, 0, 0);
-		this.body = MeshBuilder.CreateCylinder("cylinder", { height: 0.1, diameter: creatureConfig.size, faceColors }, this.world.scene);
+		this.body = MeshBuilder.CreateCylinder(
+			"plant",
+			{
+				height: 0.1,
+				diameter: creatureConfig.size,
+				faceColors
+			},
+			this.world.scene
+		);
 		this.body.position.y = 0.1;
 		this.body.physicsImpostor = new PhysicsImpostor(this.body, PhysicsImpostor.CylinderImpostor, { mass: creatureConfig.size, restitution: 0.9 }, this.world.scene);
 

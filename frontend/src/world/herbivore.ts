@@ -14,9 +14,27 @@ export class Herbivore extends Creature {
 	create(creatureConfig: CreatureConfiguration) {
 		const faceColors: Color4[] = [];
 		faceColors[4] = new Color4(0, 0, 1, 0);
-		this.body = MeshBuilder.CreateBox("box", { width: creatureConfig.size, height: 0.1, depth: creatureConfig.size, faceColors }, this.world.scene);
+		this.body = MeshBuilder.CreateBox(
+			"herbivore",
+			{
+				width: creatureConfig.size,
+				height: 0.1,
+				depth: creatureConfig.size,
+				faceColors
+			},
+			this.world.scene
+		);
 		this.body.position.y = 0.1;
-		this.body.physicsImpostor = new PhysicsImpostor(this.body, PhysicsImpostor.BoxImpostor, { mass: creatureConfig.size, restitution: 0.9, friction: 0.05 }, this.world.scene);
+		this.body.physicsImpostor = new PhysicsImpostor(
+			this.body,
+			PhysicsImpostor.BoxImpostor,
+			{
+				mass: creatureConfig.size,
+				restitution: 0.9,
+				friction: 0.05
+			},
+			this.world.scene
+		);
 		
 		this.world.addCreature(this);
 	}

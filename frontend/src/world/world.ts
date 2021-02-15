@@ -41,11 +41,9 @@ export class World {
 	}
 
 	clearInhabitants() {
-		for (let i = 0; i < this.population.length; i++) {
-			const creature = this.population[i];
-			creature.destroy();
+		while (this.population.length) {
+			this.population[0].destroy();
 		}
-		this.population = [];
 	}
 
 	createBorder(size: Vector2) {
@@ -143,13 +141,15 @@ export class World {
 	}
 
 	step() {
-		this.population.forEach(creature => {
-			this.updateNearBy();
+		this.updateNearBy();
+		for (let i = 0; i < this.population.length; i++) {
+			const creature = this.population[i];
 			creature.step();
 
 			if (creature.isDead()) {
 				creature.destroy();
+				i--; // creature is taken out of the population so same index takes next one
 			}
-		});
+		}
 	}
 };

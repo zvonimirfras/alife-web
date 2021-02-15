@@ -32,8 +32,7 @@ export const InhabitantSettings = ({
 			// TODO randomize configs based on mutation rate
 			switch (type) {
 				case 'plant': {
-					const plant = new Plant(world.current);
-					plant.create({
+					new Plant(world.current, {
 						...config,
 						position: randomPosition(world.current.size, config.size)
 					} as CreatureConfiguration);
@@ -41,8 +40,7 @@ export const InhabitantSettings = ({
 				}
 
 				case 'herbivore': {
-					const herbivore = new Herbivore(world.current);
-					herbivore.create({
+					new Herbivore(world.current, {
 						...config,
 						sensorSize: config.size * 5,
 						position: randomPosition(world.current.size, config.size)
@@ -51,8 +49,7 @@ export const InhabitantSettings = ({
 				}
 
 				case 'predator': {
-					const predator = new Predator(world.current);
-					predator.create({
+					new Predator(world.current, {
 						...config,
 						sensorSize: config.size * 10,
 						position: randomPosition(world.current.size, config.size)
@@ -107,24 +104,24 @@ export const InhabitantSettings = ({
 export const Controls = ({className, world, ...rest}: any) => {
 	const [size, setSize] = useState([20, 20]);
 	const [plantsConfig, setPlantsConfig] = useState({
-		count: 30,
-		size: 2,
+		count: 5,
+		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,
 		energy: 500
 	});
 	const [herbivoresConfig, setHerbivoresConfig] = useState({
-		count: 30,
-		size: 2,
+		count: 5,
+		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,
 		energy: 500
 	});
 	const [predatorsConfig, setPredatorsConfig] = useState({
-		count: 30,
-		size: 2,
+		count: 5,
+		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,

@@ -6,6 +6,11 @@ button.bx--btn.bx--btn--icon-only.menu-button {
 	right: 0;
 }
 
+.hide-content {
+	overflow: hidden;
+	position: relative;
+}
+
 .scene {
 	width: calc(100% - #{$side-pane-width});
 	height: 100%;

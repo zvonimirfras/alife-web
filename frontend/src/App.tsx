@@ -55,9 +55,11 @@ function App() {
 				shouldResize={shouldSceneResize}
 				setShouldResize={setShouldSceneResize}
 				id='my-canvas' />
-			<Controls
-				className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')}
-				world={world} />
+			<div className={isMenuOpen ? '' : 'hide-content'}>
+				<Controls
+					className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')}
+					world={world} />
+			</div>
 			<Button
 				className='menu-button'
 				kind='secondary'

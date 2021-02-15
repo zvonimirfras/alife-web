@@ -19,6 +19,7 @@ export class World {
 	ground: Mesh | null = null;
 	walls: Mesh[] = [];
 	size = new Vector2(0, 0);
+	shouldRunSimulation = true;
 
 	constructor(scene: Scene) {
 		this.scene = scene;
@@ -141,6 +142,10 @@ export class World {
 	}
 
 	step() {
+		if (!this.shouldRunSimulation) {
+			return;
+		}
+		
 		this.updateNearBy();
 		for (let i = 0; i < this.population.length; i++) {
 			const creature = this.population[i];

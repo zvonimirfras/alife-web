@@ -2,7 +2,7 @@ import {
 	ArcRotateCamera,
 	Vector3
 } from '@babylonjs/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu32 } from '@carbon/icons-react';
 
 import './App.scss';
@@ -39,11 +39,19 @@ const onRender = (scene: any) => {
 function App() {
 	const [isMenuOpen, setIsMenuOpen] = useState(true);
 	const [shouldSceneResize, setShouldSceneResize] = useState(false);
-	
+	const [shouldRunSimulation, setShouldRunSimulation] = useState(true);
+
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 		setTimeout(() => setShouldSceneResize(true), 150); // after the animation
 	};
+
+	useEffect(() => {
+		if (!world.current) {
+			return;
+		}
+		world.current.shouldRunSimulation = !!shouldRunSimulation;
+	}, [shouldRunSimulation]);
 
 	return (
 		<div className='app'>
@@ -54,11 +62,14 @@ function App() {
 				onRender={onRender}
 				shouldResize={shouldSceneResize}
 				setShouldResize={setShouldSceneResize}
+				shouldRunSimulation={shouldRunSimulation}
 				id='my-canvas' />
 			<div className={isMenuOpen ? '' : 'hide-content'}>
 				<Controls
 					className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')}
-					world={world} />
+					world={world}
+					shouldRunSimulation={shouldRunSimulation}
+					setShouldRunSimulation={setShouldRunSimulation} />
 			</div>
 			<Button
 				className='menu-button'

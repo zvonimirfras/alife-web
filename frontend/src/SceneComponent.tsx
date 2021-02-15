@@ -19,6 +19,7 @@ export const SceneComponent = (props: any) => {
 		onSceneReady,
 		shouldResize,
 		setShouldResize,
+		shouldRunSimulation,
 		...rest
 	} = props;
 
@@ -77,11 +78,20 @@ export const SceneComponent = (props: any) => {
 	]);
 
 	useEffect(() => {
+		if (!scene.current) {
+			return;
+		}
+
+		scene.current.physicsEnabled = !!shouldRunSimulation;
+	}, [shouldRunSimulation]);
+
+	useEffect(() => {
 		if (shouldResize) {
 			resize();
 			setShouldResize(false);
 		}
 	}, [shouldResize, setShouldResize]);
+
 	return (
 		<canvas ref={reactCanvas} {...rest} />
 	);

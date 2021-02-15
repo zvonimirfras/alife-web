@@ -236,7 +236,7 @@ export class Creature {
 
 		const oldMass = this.body?.physicsImpostor?.mass || 0;
 
-		if (growthRate < 1 && oldMass < 1) {
+		if (growthRate <= 0 && oldMass <= 0) {
 			return;
 		}
 
@@ -244,6 +244,7 @@ export class Creature {
 		const oldAngularVelocity = this.body?.physicsImpostor?.getAngularVelocity();
 		if (this.body) {
 			this.body.scaling.multiplyInPlace(new Vector3(growthRate, growthRate, growthRate));
+			this.body.physicsImpostor?.setMass(oldMass * growthRate); // TODO needs better mass formula (based on density and volume)
 			this.body.physicsImpostor?.forceUpdate();
 			this.body.physicsImpostor?.setLinearVelocity(oldLinearVlocity || null);
 			this.body.physicsImpostor?.setAngularVelocity(oldAngularVelocity || null);
@@ -290,6 +291,7 @@ export class Creature {
 		this.sensorSize = creatureConfig.sensorSize;
 		this.initialSize = creatureConfig.size;
 		this.initialEnergy = creatureConfig.energy;
+		this.growthRate = creatureConfig.growthRate;
 	}
 
 	destroy() {

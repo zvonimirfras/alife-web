@@ -8,15 +8,20 @@ import {
 } from '@babylonjs/core';
 
 export class Plant extends Creature {
-	initalMass = 0;
+	initialMass = 0;
+
+	constructor(world: World, config: CreatureConfiguration, body?: Mesh) {
+		super(world, config, body);
+
+		this.initialMass = body?.physicsImpostor?.mass || config.size;
+	}
 
 	create(creatureConfig: CreatureConfiguration) {
 		const faceColors: Color4[] = [];
 		faceColors[2] = new Color4(0, 1, 0, 0);
 		this.body = MeshBuilder.CreateCylinder("cylinder", { height: 0.1, diameter: creatureConfig.size, faceColors }, this.world.scene);
 		this.body.position.y = 0.1;
-		this.body.physicsImpostor = new PhysicsImpostor(this.body, PhysicsImpostor.CylinderImpostor, { mass: 1, restitution: 0.9 }, this.world.scene);
-		this.initalMass = this.body.physicsImpostor.mass;
+		this.body.physicsImpostor = new PhysicsImpostor(this.body, PhysicsImpostor.CylinderImpostor, { mass: creatureConfig.size, restitution: 0.9 }, this.world.scene);
 
 		this.world.addCreature(this);
 	}
@@ -26,7 +31,7 @@ export class Plant extends Creature {
 	}
 
 	updateEnergy() {
-		this.energy = (this.body?.physicsImpostor?.mass || 0) / this.initalMass * this.initialEnergy;
+		this.energy = (this.body?.physicsImpostor?.mass || 0) / this.initialMass * this.initialEnergy;
 	}
 
 	step() {

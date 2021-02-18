@@ -1,3 +1,5 @@
+import { Predator } from './predator';
+import { Herbivore } from './herbivore';
 import {
 	Color3,
 	DirectionalLight,
@@ -15,6 +17,7 @@ import { throttle } from 'lodash';
 import { Creature } from './creature';
 import { Plant } from './plant';
 import { runSameTouchParticleSystem } from './../particle-systems/same-touch';
+import { runPredatorTouchParticleSystem } from './../particle-systems/predator-touch';
 
 export class World {
 	scene: Scene;
@@ -116,6 +119,7 @@ export class World {
 	
 	// TODO only show the particles on collision instead of throttled touch
 	runSameTouchParticleSystemThrottled = throttle(runSameTouchParticleSystem, 250, { leading: true });
+	runPredatorTouchParticleSystemThrottled = throttle(runPredatorTouchParticleSystem, 250, { leading: true });
 
 	updateNearBy() {
 		for (let i = 0; i < this.population.length; i++) {
@@ -141,17 +145,24 @@ export class World {
 
 				// touching
 				if (creature2.body &&creature.body?.intersectsMesh(creature2.body)) {
-					if (
-						this.showTouchIndicators &&
-						creature.constructor === creature2.constructor &&
-						!(creature instanceof Plant)
-					) {
-						this.runSameTouchParticleSystemThrottled(
-							(creature.body?.position || new Vector3())
-								.add(creature2.body?.position || new Vector3())
-								.divide(new Vector3(2, 2, 2)),
-							this.scene
-						);
+					if (this.showTouchIndicators) {
+						if (creature.constructor === creature2.constructor && !(creature instanceof Plant)) {
+							this.runSameTouchParticleSystemThrottled(
+								(creature.body?.position || new Vector3())
+									.add(creature2.body?.position || new Vector3())
+									.divide(new Vector3(2, 2, 2)),
+								this.scene
+							);
+						}
+						if ((creature instanceof Herbivore && creature2 instanceof Predator) ||
+							(creature instanceof Predator && creature2 instanceof Herbivore)) {
+							this.runPredatorTouchParticleSystemThrottled(
+								(creature.body?.position || new Vector3())
+									.add(creature2.body?.position || new Vector3())
+									.divide(new Vector3(2, 2, 2)),
+								this.scene
+							);
+						}
 					}
 					creature.touchingCreatures.push(creature2);
 					creature2.touchingCreatures.push(creature);

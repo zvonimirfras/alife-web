@@ -1,4 +1,3 @@
-import { Creature } from './creature';
 import {
 	Color3,
 	DirectionalLight,
@@ -12,6 +11,10 @@ import {
 	Vector2,
 	Vector3
 } from '@babylonjs/core';
+import { throttle } from 'lodash';
+import { Creature } from './creature';
+import { Plant } from './plant';
+import { runSameTouchParticleSystem } from './../particle-systems/same-touch';
 
 export class World {
 	scene: Scene;
@@ -20,6 +23,7 @@ export class World {
 	walls: Mesh[] = [];
 	size = new Vector2(0, 0);
 	shouldRunSimulation = true;
+	showTouchIndicators = true;
 
 	constructor(scene: Scene) {
 		this.scene = scene;
@@ -109,6 +113,9 @@ export class World {
 
 		this.ground.receiveShadows = true;
 	}
+	
+	// TODO only show the particles on collision instead of throttled touch
+	runSameTouchParticleSystemThrottled = throttle(runSameTouchParticleSystem, 250, { leading: true });
 
 	updateNearBy() {
 		for (let i = 0; i < this.population.length; i++) {
@@ -134,6 +141,18 @@ export class World {
 
 				// touching
 				if (creature2.body &&creature.body?.intersectsMesh(creature2.body)) {
+					if (
+						this.showTouchIndicators &&
+						creature.constructor === creature2.constructor &&
+						!(creature instanceof Plant)
+					) {
+						this.runSameTouchParticleSystemThrottled(
+							(creature.body?.position || new Vector3())
+								.add(creature2.body?.position || new Vector3())
+								.divide(new Vector3(2, 2, 2)),
+							this.scene
+						);
+					}
 					creature.touchingCreatures.push(creature2);
 					creature2.touchingCreatures.push(creature);
 				}
@@ -145,7 +164,7 @@ export class World {
 		if (!this.shouldRunSimulation) {
 			return;
 		}
-		
+
 		this.updateNearBy();
 		for (let i = 0; i < this.population.length; i++) {
 			const creature = this.population[i];

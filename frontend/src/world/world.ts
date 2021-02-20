@@ -171,6 +171,28 @@ export class World {
 		}
 	}
 
+	statisticsSnapshot() {
+		return {
+			population: this.population.map(creature => ({
+				age: creature.age,
+				reproductionTime: creature.reproductionTime,
+				paralyzationTimer: creature.paralyzationTimer,
+				forwardVector: creature.forwardVector,
+				maxAge: creature.maxAge,
+				reproductionTimeThreshold: creature.reproductionTimeThreshold,
+				energy: creature.energy,
+				mutationRate: creature.mutationRate,
+				growthRate: creature.growthRate,
+				initialSize: creature.initialSize,
+				initialEnergy: creature.initialEnergy,
+				maxForce: creature.maxForce,
+				maxTorque: creature.maxTorque,
+				maxAngularSpeed: creature.maxAngularSpeed,
+				maxSpeed: creature.maxSpeed
+			}))
+		};
+	}
+
 	step() {
 		if (!this.shouldRunSimulation) {
 			return;

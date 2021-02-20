@@ -10,6 +10,7 @@ import { Controls } from './Controls';
 import { SceneComponent } from './SceneComponent';
 import { Button } from 'carbon-components-react';
 import { World } from './world/world';
+import { StatisticsView } from './StatisticsView';
 
 let world: {current: World | undefined} = { current: undefined };
 
@@ -71,6 +72,7 @@ function App() {
 					shouldRunSimulation={shouldRunSimulation}
 					setShouldRunSimulation={setShouldRunSimulation} />
 			</div>
+			<StatisticsView world={world} />
 			<Button
 				className='menu-button'
 				kind='secondary'

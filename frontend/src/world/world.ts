@@ -178,6 +178,9 @@ export class World {
 		return {
 			population: this.population.map(creature => ({
 				age: creature.age,
+				type: creature instanceof Plant ? 'plant' : (
+					creature instanceof Herbivore ? 'herbivore' : 'predator'
+				),
 				reproductionTime: creature.reproductionTime,
 				paralyzationTimer: creature.paralyzationTimer,
 				forwardVector: creature.forwardVector,

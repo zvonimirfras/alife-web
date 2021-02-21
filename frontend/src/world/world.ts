@@ -27,6 +27,9 @@ export class World {
 	size = new Vector2(0, 0);
 	shouldRunSimulation = true;
 	showTouchIndicators = true;
+	statisticsInterval = 2000;
+	statisticsIntervalTimer = 0;
+	addStatisticsSnapshotCallback: ((world: any, statistics: any) => {}) | undefined = undefined;
 
 	constructor(scene: Scene) {
 		this.scene = scene;
@@ -196,6 +199,16 @@ export class World {
 	step() {
 		if (!this.shouldRunSimulation) {
 			return;
+		}
+
+		if (this.addStatisticsSnapshotCallback) {
+			this.statisticsIntervalTimer += 30;
+
+			if (this.statisticsIntervalTimer >= this.statisticsInterval) {
+				this.statisticsIntervalTimer = 0;
+
+				this.addStatisticsSnapshotCallback(this, this.statisticsSnapshot());
+			}
 		}
 
 		this.updateNearBy();

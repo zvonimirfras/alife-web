@@ -42,7 +42,7 @@ export const InhabitantSettings = ({
 				case 'herbivore': {
 					new Herbivore(world.current, {
 						...config,
-						sensorSize: config.size * 5,
+						sensorSize: config.size * 7,
 						position: randomPosition(world.current.size, config.size)
 					} as CreatureConfiguration);
 					break;
@@ -51,7 +51,7 @@ export const InhabitantSettings = ({
 				case 'predator': {
 					new Predator(world.current, {
 						...config,
-						sensorSize: config.size * 10,
+						sensorSize: config.size * 15,
 						position: randomPosition(world.current.size, config.size)
 					} as CreatureConfiguration);
 					break;
@@ -122,24 +122,24 @@ export const Controls = ({
 		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
-		maxAge: 70,
-		energy: 90
+		maxAge: 120,
+		energy: 10
 	});
 	const [herbivoresConfig, setHerbivoresConfig] = useState({
-		count: 5,
+		count: 20,
 		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
-		maxAge: 70,
-		energy: 90
+		maxAge: 50,
+		energy: 20
 	});
 	const [predatorsConfig, setPredatorsConfig] = useState({
-		count: 5,
+		count: 10,
 		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 70,
-		energy: 90
+		energy: 50
 	});
 
 	useEffect(() => {

@@ -72,7 +72,9 @@ function App() {
 					shouldRunSimulation={shouldRunSimulation}
 					setShouldRunSimulation={setShouldRunSimulation} />
 			</div>
-			<StatisticsView world={world} />
+			<StatisticsView
+				className={'scene ' + (!isMenuOpen ? 'expand-scene' : '')}
+				world={world} />
 			<Button
 				className='menu-button'
 				kind='secondary'

@@ -3,7 +3,7 @@ import {
 	Vector3
 } from '@babylonjs/core';
 import React, { useEffect, useState } from 'react';
-import { Menu32 } from '@carbon/icons-react';
+import { Menu32, Play32, Pause32 } from '@carbon/icons-react';
 
 import './App.scss';
 import { Controls } from './Controls';
@@ -65,12 +65,15 @@ function App() {
 				setShouldResize={setShouldSceneResize}
 				shouldRunSimulation={shouldRunSimulation}
 				id='my-canvas' />
+			<button
+			className='run-button'
+			onClick={() => setShouldRunSimulation(!shouldRunSimulation)}>
+				{shouldRunSimulation ? <Pause32 /> : <Play32 />}
+			</button>
 			<div className={isMenuOpen ? '' : 'hide-content'}>
 				<Controls
 					className={'side-pane ' + (isMenuOpen ? 'menu-open' : '')}
-					world={world}
-					shouldRunSimulation={shouldRunSimulation}
-					setShouldRunSimulation={setShouldRunSimulation} />
+					world={world} />
 			</div>
 			<StatisticsView
 				className={'scene ' + (!isMenuOpen ? 'expand-scene' : '')}

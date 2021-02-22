@@ -11,6 +11,27 @@ button.bx--btn.bx--btn--icon-only.menu-button {
 	position: relative;
 }
 
+.run-button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	border: none;
+	background: none;
+	padding: 5px 5px 0px 5px;
+	margin: 10px;
+	cursor: pointer;
+	transition: all 200ms;
+
+	&:hover {
+		filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+	}
+
+	svg {
+		fill: white;
+	}
+}
+
 .scene {
 	width: calc(100% - #{$side-pane-width});
 	height: 100%;

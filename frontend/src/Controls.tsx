@@ -112,8 +112,6 @@ export const InhabitantSettings = ({
 export const Controls = ({
 	className,
 	world,
-	shouldRunSimulation,
-	setShouldRunSimulation,
 	...rest
 }: any) => {
 	const [size, setSize] = useState([20, 20]);
@@ -174,7 +172,6 @@ export const Controls = ({
 			label='Height'/>
 		<Button onClick={clearInhabitants}>Clear inhabitants</Button>
 		<Button onClick={createBorder}>Create</Button>
-		<Button onClick={() => setShouldRunSimulation(!shouldRunSimulation)}>{shouldRunSimulation ? 'Pause simulation' : 'Run simulation'}</Button>
 
 		<h4 className='inhabitants-title'>Inhabitants</h4>
 		

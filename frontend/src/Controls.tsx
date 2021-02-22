@@ -175,7 +175,7 @@ export const Controls = ({
 
 		<h4 className='inhabitants-title'>Inhabitants</h4>
 		
-		<Tabs>
+		<Tabs className='controls-tabs'>
 			<Tab label='Plants'>
 				<InhabitantSettings
 					type='plant'

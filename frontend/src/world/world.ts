@@ -24,6 +24,7 @@ export class World {
 	scene: Scene;
 	population: Creature[] = [];
 	ground: Mesh | null = null;
+	roof: Mesh | null = null;
 	walls: Mesh[] = [];
 	size = new Vector2(0, 0);
 	shouldRunSimulation = true;
@@ -60,11 +61,15 @@ export class World {
 
 	createBorder(size: Vector2) {
 		this.size = size.clone();
-		// Our built-in 'ground' shape.
 		if (this.ground) {
 			this.scene.removeMesh(this.ground);
 			this.ground.dispose();
 			this.ground = null
+		}
+		if (this.roof) {
+			this.scene.removeMesh(this.roof);
+			this.roof.dispose();
+			this.roof = null
 		}
 
 		if (this.walls.length) {
@@ -76,7 +81,9 @@ export class World {
 		}
 
 		const wallThickness = 1;
+		const wallHeight = 5;
 		const groundImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.01, restitution: 0 };
+		const roofImposterOptions = groundImposterOptions;
 		const wallImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.01, restitution: 0.5 };
 
 		this.ground = MeshBuilder.CreateBox("ground", { width: size.x, height: wallThickness, depth: size.y }, this.scene);
@@ -84,7 +91,17 @@ export class World {
 		
 		this.ground.physicsImpostor = new PhysicsImpostor(this.ground, PhysicsImpostor.BoxImpostor, groundImposterOptions, this.scene);
 
-		const wallHeight = 5;
+		const roofMaterial = new StandardMaterial('roofMaterial', this.scene);
+		roofMaterial.diffuseColor = Color3.Gray();
+		roofMaterial.emissiveColor = new Color3(0.1, 0.1, 0.1);
+		roofMaterial.alpha = 0;
+
+		this.roof = MeshBuilder.CreateBox("roof", { width: size.x, height: wallThickness, depth: size.y }, this.scene);
+		this.roof.position = new Vector3(0, wallHeight - 2 * wallThickness, 0);
+		this.roof.material = roofMaterial;
+		
+		this.roof.physicsImpostor = new PhysicsImpostor(this.roof, PhysicsImpostor.BoxImpostor, roofImposterOptions, this.scene);
+		
 
 		const wallY = (wallHeight - wallThickness)/2 - wallThickness;
 		const wallMaterial = new StandardMaterial('wallMaterial', this.scene);

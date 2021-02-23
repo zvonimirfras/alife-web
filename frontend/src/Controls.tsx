@@ -80,7 +80,7 @@ export const InhabitantSettings = ({
 			id={`${type}-inhabitant-settings-growth-rate`}
 			value={config?.growthRate}
 			min={0}
-			step={0.0001}
+			step={0.00001}
 			onChange={(event: any) => setConfig({ ...config, growthRate: Number(event.imaginaryTarget.value)})}
 			label='Growth rate'/>
 		<NumberInput

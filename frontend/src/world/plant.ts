@@ -49,7 +49,7 @@ export class Plant extends Creature {
 
 		// reproduction
 		if (this.canReproduce()) {
-			if (Math.random() < this.mutationRate) {
+			if (Math.random() < 0.35) { // TODO make this configurable
 				// not every seed succeeds
 				this.reproduce(this);
 			} else {

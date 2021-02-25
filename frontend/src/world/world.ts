@@ -26,6 +26,7 @@ export class World {
 	ground: Mesh | null = null;
 	roof: Mesh | null = null;
 	walls: Mesh[] = [];
+	corners: Mesh[] = [];
 	size = new Vector2(0, 0);
 	shouldRunSimulation = true;
 	showTouchIndicators = true;
@@ -80,6 +81,14 @@ export class World {
 			this.walls = [];
 		}
 
+		if (this.corners.length) {
+			this.corners.forEach(corner => {
+				this.scene.removeMesh(corner);
+				corner.dispose();
+			});
+			this.corners = [];
+		}
+
 		const wallThickness = 1;
 		const wallHeight = 5;
 		const groundImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.01, restitution: 0 };
@@ -112,31 +121,61 @@ export class World {
 		wallMaterial.emissiveColor = new Color3(0.1, 0.1, 0.1);
 		wallMaterial.alpha = 0.5;
 
-		const newWallImposter = () => new PhysicsImpostor(wall, PhysicsImpostor.BoxImpostor, wallImposterOptions, this.scene);
+		const newWallImposter = (wall: Mesh) => new PhysicsImpostor(wall, PhysicsImpostor.BoxImpostor, wallImposterOptions, this.scene);
 
 		let wall = MeshBuilder.CreateBox("wall1", { width: size.x, height: wallHeight, depth: wallThickness }, this.scene);
 		wall.position = new Vector3(0, wallY, (-size.y - wallThickness)/2);
-		wall.physicsImpostor = newWallImposter();
+		wall.physicsImpostor = newWallImposter(wall);
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
 		wall = MeshBuilder.CreateBox("wall2", { width: size.x, height: wallHeight, depth: wallThickness }, this.scene);
 		wall.position = new Vector3(0, wallY, (size.y + wallThickness)/2);
-		wall.physicsImpostor = newWallImposter();
+		wall.physicsImpostor = newWallImposter(wall);
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
 		wall = MeshBuilder.CreateBox("wall3", { width: wallThickness, height: wallHeight, depth: size.y + 2 * wallThickness }, this.scene);
 		wall.position = new Vector3((size.x + wallThickness)/2, wallY, 0);
-		wall.physicsImpostor = newWallImposter();
+		wall.physicsImpostor = newWallImposter(wall);
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
 		wall = MeshBuilder.CreateBox("wall4", { width: wallThickness, height: wallHeight, depth: size.y + 2 * wallThickness }, this.scene);
 		wall.position = new Vector3((-size.x - wallThickness)/2, wallY, 0);
-		wall.physicsImpostor = newWallImposter();
+		wall.physicsImpostor = newWallImposter(wall);
 		wall.material = wallMaterial;
 		this.walls.push(wall);
+
+		const halfSqrt2 = Math.sqrt(2) / 2;
+		// CORNERS
+		let corner = MeshBuilder.CreateBox("corner1", { width: wallThickness * 2, height: wallHeight, depth: wallThickness }, this.scene);
+		corner.rotation = new Vector3(0, halfSqrt2, 0)
+		corner.position = new Vector3((-size.x + halfSqrt2) / 2, wallY, (-size.y - wallThickness)/2 + halfSqrt2);
+		corner.physicsImpostor = newWallImposter(corner);
+		corner.material = wallMaterial;
+		this.corners.push(corner);
+
+		corner = MeshBuilder.CreateBox("corner2", { width: wallThickness * 2, height: wallHeight, depth: wallThickness }, this.scene);
+		corner.rotation = new Vector3(0, halfSqrt2, 0)
+		corner.position = new Vector3((size.x - halfSqrt2) / 2, wallY, (size.y + wallThickness)/2 - halfSqrt2);
+		corner.physicsImpostor = newWallImposter(corner);
+		corner.material = wallMaterial;
+		this.corners.push(corner);
+
+		corner = MeshBuilder.CreateBox("corner3", { width: wallThickness * 2, height: wallHeight, depth: wallThickness }, this.scene);
+		corner.rotation = new Vector3(0, -halfSqrt2, 0)
+		corner.position = new Vector3((-size.x + halfSqrt2) / 2, wallY, (size.y + wallThickness)/2 - halfSqrt2);
+		corner.physicsImpostor = newWallImposter(corner);
+		corner.material = wallMaterial;
+		this.corners.push(corner);
+
+		corner = MeshBuilder.CreateBox("corner4", { width: wallThickness * 2, height: wallHeight, depth: wallThickness }, this.scene);
+		corner.rotation = new Vector3(0, -halfSqrt2, 0)
+		corner.position = new Vector3((size.x - halfSqrt2) / 2, wallY, (-size.y - wallThickness)/2 + halfSqrt2);
+		corner.physicsImpostor = newWallImposter(corner);
+		corner.material = wallMaterial;
+		this.corners.push(corner);
 	}
 	
 	// TODO only show the particles on collision instead of throttled touch

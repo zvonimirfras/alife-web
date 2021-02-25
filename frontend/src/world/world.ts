@@ -86,11 +86,14 @@ export class World {
 		const roofImposterOptions = groundImposterOptions;
 		const wallImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.01, restitution: 0.5 };
 
+		// GROUND
 		this.ground = MeshBuilder.CreateBox("ground", { width: size.x, height: wallThickness, depth: size.y }, this.scene);
 		this.ground.position = new Vector3(0, -wallThickness, 0);
 		
 		this.ground.physicsImpostor = new PhysicsImpostor(this.ground, PhysicsImpostor.BoxImpostor, groundImposterOptions, this.scene);
+		this.ground.receiveShadows = true;
 
+		// ROOF
 		const roofMaterial = new StandardMaterial('roofMaterial', this.scene);
 		roofMaterial.diffuseColor = Color3.Gray();
 		roofMaterial.emissiveColor = new Color3(0.1, 0.1, 0.1);
@@ -102,7 +105,7 @@ export class World {
 		
 		this.roof.physicsImpostor = new PhysicsImpostor(this.roof, PhysicsImpostor.BoxImpostor, roofImposterOptions, this.scene);
 		
-
+		// WALLS
 		const wallY = (wallHeight - wallThickness)/2 - wallThickness;
 		const wallMaterial = new StandardMaterial('wallMaterial', this.scene);
 		wallMaterial.diffuseColor = Color3.Gray();
@@ -118,24 +121,22 @@ export class World {
 		this.walls.push(wall);
 
 		wall = MeshBuilder.CreateBox("wall2", { width: size.x, height: wallHeight, depth: wallThickness }, this.scene);
-		wall.position = new Vector3(0, wallY, (size.y - wallThickness)/2);
+		wall.position = new Vector3(0, wallY, (size.y + wallThickness)/2);
 		wall.physicsImpostor = newWallImposter();
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
-		wall = MeshBuilder.CreateBox("wall3", { width: wallThickness, height: wallHeight, depth: size.y }, this.scene);
-		wall.position = new Vector3((size.x - wallThickness)/2, wallY, 0);
+		wall = MeshBuilder.CreateBox("wall3", { width: wallThickness, height: wallHeight, depth: size.y + 2 * wallThickness }, this.scene);
+		wall.position = new Vector3((size.x + wallThickness)/2, wallY, 0);
 		wall.physicsImpostor = newWallImposter();
 		wall.material = wallMaterial;
 		this.walls.push(wall);
 
-		wall = MeshBuilder.CreateBox("wall4", { width: wallThickness, height: wallHeight, depth: size.y }, this.scene);
-		wall.position = new Vector3((-size.x + wallThickness)/2, wallY, 0);
+		wall = MeshBuilder.CreateBox("wall4", { width: wallThickness, height: wallHeight, depth: size.y + 2 * wallThickness }, this.scene);
+		wall.position = new Vector3((-size.x - wallThickness)/2, wallY, 0);
 		wall.physicsImpostor = newWallImposter();
 		wall.material = wallMaterial;
 		this.walls.push(wall);
-
-		this.ground.receiveShadows = true;
 	}
 	
 	// TODO only show the particles on collision instead of throttled touch

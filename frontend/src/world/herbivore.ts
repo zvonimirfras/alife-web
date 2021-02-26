@@ -25,6 +25,7 @@ export class Herbivore extends Creature {
 			this.world.scene
 		);
 		this.body.position.y = 0.1;
+		this.body.rotation.y = Math.random() * 2 * Math.PI;
 		this.body.physicsImpostor = new PhysicsImpostor(
 			this.body,
 			PhysicsImpostor.BoxImpostor,

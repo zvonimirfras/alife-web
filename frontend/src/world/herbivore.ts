@@ -59,6 +59,9 @@ export class Herbivore extends Creature {
 	step() {
 		super.step();
 		let busy = false;
+		if (this.isParalyzed()) {
+			return;
+		}
 
 		// someone's nearby
 		if (this.nearByCreatures.length) {

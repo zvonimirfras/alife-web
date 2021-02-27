@@ -170,7 +170,6 @@ export class Creature {
 		if (this.isParalyzed()) {
 			this.paralyzationTimer -= 1.0 / 30;
 		}
-		this.explore();
 	}
 
 	explore() { }

@@ -45,6 +45,9 @@ export class Herbivore extends Creature {
 	}
 
 	explore() {
+		if (this.isParalyzed()) {
+			return;
+		}
 		const torque = 1 * (this.body?.physicsImpostor?.mass || 0);
 	
 		if (Math.random() < 0.1 ) // 1 in 10 chance

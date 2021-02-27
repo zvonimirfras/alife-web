@@ -52,7 +52,7 @@ export class Creature {
 	sensorSize = 1; // initialized with create
 
 	paralyze(time = 2) {
-		this.paralyzationTimer = 2;
+		this.paralyzationTimer = time;
 	}
 
 	isParalyzed() {

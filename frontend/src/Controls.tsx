@@ -119,12 +119,12 @@ export const Controls = ({
 }: any) => {
 	const [size, setSize] = useState([20, 20]);
 	const [plantsConfig, setPlantsConfig] = useState({
-		count: 5,
-		size: 1,
+		count: 20,
+		size: 2,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
-		maxAge: 120,
-		energy: 10
+		maxAge: 40,
+		energy: 150
 	});
 	const [herbivoresConfig, setHerbivoresConfig] = useState({
 		count: 20,
@@ -132,14 +132,14 @@ export const Controls = ({
 		growthRate: 1.0001,
 		mutationRate: 0.2,
 		maxAge: 50,
-		energy: 20
+		energy: 50
 	});
 	const [predatorsConfig, setPredatorsConfig] = useState({
 		count: 10,
 		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
-		maxAge: 70,
+		maxAge: 50,
 		energy: 50
 	});
 

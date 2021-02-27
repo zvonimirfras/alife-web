@@ -262,7 +262,8 @@ export class Creature {
 
 	takeEnergy(taker: Creature) {
 		const v = taker.body?.physicsImpostor?.getLinearVelocity() || new Vector3();
-		const e = (taker.body?.physicsImpostor?.mass || 0) * v.length() + 10; // static part +10
+		const guaranteedEnergy = 0.1 * taker.initialEnergy; // 10% initial energy just by touching
+		const e = (taker.body?.physicsImpostor?.mass || 0) * v.length() + guaranteedEnergy;
 		this.energy -= e;
 		taker.energy += e;
 	}

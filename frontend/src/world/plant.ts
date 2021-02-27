@@ -16,6 +16,21 @@ export class Plant extends Creature {
 		this.initialMass = body?.physicsImpostor?.mass || config.size;
 	}
 
+	takeEnergy(taker: Creature) {
+		const energyBefore = this.energy;
+		super.takeEnergy(taker);
+		
+		if (this.energy <= 0) {
+			this.destroy();
+			return;
+		}
+
+		const energyDifference = energyBefore - this.energy;
+		const energyPercentageDifference = energyDifference / this.initialEnergy;
+
+		this.shrink(1 - energyPercentageDifference);
+	}
+
 	create(creatureConfig: CreatureConfiguration) {
 		const faceColors: Color4[] = [];
 		faceColors[2] = new Color4(0, 1, 0, 0);

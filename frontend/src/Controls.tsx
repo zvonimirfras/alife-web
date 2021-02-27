@@ -127,7 +127,7 @@ export const Controls = ({
 		energy: 150
 	});
 	const [herbivoresConfig, setHerbivoresConfig] = useState({
-		count: 20,
+		count: 15,
 		size: 1,
 		growthRate: 1.0001,
 		mutationRate: 0.2,

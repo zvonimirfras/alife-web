@@ -293,6 +293,7 @@ export class Creature {
 		this.initialSize = creatureConfig.size;
 		this.initialEnergy = creatureConfig.energy;
 		this.growthRate = creatureConfig.growthRate;
+		this.reproductionTimeThreshold = 0.3 * this.maxAge;
 	}
 
 	destroy() {

@@ -123,7 +123,7 @@ export const Controls = ({
 		size: 2,
 		growthRate: 1.0001,
 		mutationRate: 0.2,
-		maxAge: 40,
+		maxAge: 37,
 		energy: 15
 	});
 	const [herbivoresConfig, setHerbivoresConfig] = useState({

@@ -4,7 +4,8 @@ import {
 	Color4,
 	Mesh,
 	MeshBuilder,
-	PhysicsImpostor
+	PhysicsImpostor,
+	StandardMaterial
 } from '@babylonjs/core';
 
 export class Plant extends Creature {
@@ -43,6 +44,7 @@ export class Plant extends Creature {
 			},
 			this.world.scene
 		);
+		this.body.material = new StandardMaterial('plant', this.world.scene);
 		this.body.position.y = 0.1;
 		this.body.physicsImpostor = new PhysicsImpostor(this.body, PhysicsImpostor.CylinderImpostor, { mass: creatureConfig.size, restitution: 0.9 }, this.world.scene);
 

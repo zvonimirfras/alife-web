@@ -3,10 +3,12 @@ import { Predator } from './predator';
 import { World } from './world';
 import { Creature, CreatureConfiguration } from './creature';
 import {
+	Color3,
 	Color4,
 	Mesh,
 	MeshBuilder,
 	PhysicsImpostor,
+	StandardMaterial,
 	Vector3
 } from '@babylonjs/core';
 
@@ -24,6 +26,7 @@ export class Herbivore extends Creature {
 			},
 			this.world.scene
 		);
+		this.body.material = new StandardMaterial('herbivore', this.world.scene);
 		this.body.position.y = 0.1;
 		this.body.rotation.y = Math.random() * 2 * Math.PI;
 		this.body.physicsImpostor = new PhysicsImpostor(
@@ -55,7 +58,31 @@ export class Herbivore extends Creature {
 			this.turn(Math.random() > 0.5 ? torque : -torque);
 		}
 		if (Math.random() < 0.1) {
-			this.go(1);
+			this.go(5);
+		}
+	}
+
+	updateParalyzedColors(paralyzed = true) {
+		if (paralyzed) {
+			const color = new Color4(1, 0, 1)
+			this.setFaceColor(0, color);
+			this.setFaceColor(1, color);
+			this.setFaceColor(2, color);
+			this.setFaceColor(3, color);
+			this.setFaceColor(4, color);
+			this.setFaceColor(5, color);
+			this.setFaceColor(6, color);
+			this.setFaceColor(7, color);
+		} else {
+			const color = Color4.FromColor3(Color3.Gray());
+			this.setFaceColor(0, color);
+			this.setFaceColor(1, color);
+			this.setFaceColor(2, color);
+			this.setFaceColor(3, color);
+			this.setFaceColor(4, color);
+			this.setFaceColor(5, color);
+			this.setFaceColor(6, color);
+			this.setFaceColor(7, color);
 		}
 	}
 
@@ -63,7 +90,10 @@ export class Herbivore extends Creature {
 		super.step();
 		let busy = false;
 		if (this.isParalyzed()) {
+			this.updateParalyzedColors();
 			return;
+		} else {
+			this.updateParalyzedColors(false); // TODO find a way to not have to run this every step
 		}
 
 		// someone's nearby

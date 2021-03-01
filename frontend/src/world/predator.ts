@@ -1,4 +1,4 @@
-import { Vector3 } from '@babylonjs/core';
+import { StandardMaterial, Vector3 } from '@babylonjs/core';
 import { Herbivore } from './herbivore';
 import { World } from './world';
 import { Creature, CreatureConfiguration } from './creature';
@@ -23,6 +23,7 @@ export class Predator extends Creature {
 			},
 			this.world.scene
 		);
+		this.body.material = new StandardMaterial('predator', this.world.scene);
 		this.body.position.y = 0.1;
 		this.body.rotation.y = Math.random() * 2 * Math.PI;
 		this.body.physicsImpostor = new PhysicsImpostor(

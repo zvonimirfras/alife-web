@@ -1,8 +1,10 @@
 
 import { World } from './world';
 import {
+	Color4,
 	Mesh,
-	Vector3
+	Vector3,
+	VertexBuffer
 } from '@babylonjs/core';
 import { Utils } from './utils';
 
@@ -167,9 +169,40 @@ export class Creature {
 		this.age += 1.0 / 30;
 		this.reproductionTime += 1.0 / 30;
 
+		// transparency shows the level of energy
+		let alpha = this.energyPercentage();
+		if  (alpha < 0) {
+			alpha = 0;
+		} else if (alpha > 1) {
+			alpha = 1
+		}
+
+		if (this.body?.material) {
+			this.body.material.alpha = alpha;
+		}
+
 		if (this.isParalyzed()) {
 			this.paralyzationTimer -= 1.0 / 30;
 		}
+	}
+
+	setFaceColor(faceIndex: number, color: Color4) {
+		if (!this.body) {
+			return;
+		}
+		const faceIndexT = 2 * Math.floor(faceIndex / 2);
+
+		const indices = this.body.getIndices() || [];
+		let colors = this.body.getVerticesData(VertexBuffer.ColorKind) || [];
+		let vertex;
+		for (let i = 0; i < 6; i++) {
+			vertex = indices[3 * faceIndexT + i];
+			colors[4 * vertex] = color.r;
+			colors[4 * vertex + 1] = color.g;
+			colors[4 * vertex + 2] = color.b;
+			colors[4 * vertex + 3] = color.a;
+		}
+		this.body.setVerticesData(VertexBuffer.ColorKind, colors);
 	}
 
 	explore() { }

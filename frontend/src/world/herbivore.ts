@@ -105,7 +105,7 @@ export class Herbivore extends Creature {
 				const fromTarget = this.body?.position.subtract(this.getClosestVisible(Predator)?.body?.position || new Vector3());
 				const desiredAngle = fromTarget ? Math.atan2(fromTarget.y, fromTarget.x) : 0;
 				this.turnTo(desiredAngle);
-				this.go(1);
+				this.go(5);
 			}
 		
 			// if energy low, check if plants nearby
@@ -116,7 +116,7 @@ export class Herbivore extends Creature {
 					const fromTarget = this.getClosestVisible(Plant)?.body?.position.subtract(this.body?.position || new Vector3());
 					const desiredAngle = fromTarget ? Math.atan2(fromTarget.y, fromTarget.x) : 0;
 					this.turnTo(desiredAngle);
-					this.go(1);
+					this.go(5);
 				}
 			}
 			
@@ -128,7 +128,7 @@ export class Herbivore extends Creature {
 					const fromTarget = this.getClosestVisible(Herbivore)?.body?.position.subtract(this.body?.position || new Vector3());
 					const desiredAngle = fromTarget ? Math.atan2(fromTarget.y, fromTarget.x) : 0;
 					this.turnTo(desiredAngle);
-					this.go(1);
+					this.go(5);
 				}
 			}
 		}

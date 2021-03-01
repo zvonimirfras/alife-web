@@ -91,7 +91,7 @@ export class World {
 
 		const wallThickness = 1;
 		const wallHeight = 5;
-		const groundImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.01, restitution: 0 };
+		const groundImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.1, restitution: 0 };
 		const roofImposterOptions = groundImposterOptions;
 		const wallImposterOptions: PhysicsImpostorParameters = { mass: 0, friction: 0.01, restitution: 0.5 };
 

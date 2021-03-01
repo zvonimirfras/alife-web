@@ -52,7 +52,7 @@ export class Predator extends Creature {
 			this.turn(Math.random() > 0.5 ? torque : -torque);
 		}
 		if (Math.random() < 0.1) {
-			this.go(1);
+			this.go(5);
 		}
 	}
 
@@ -71,7 +71,7 @@ export class Predator extends Creature {
 					const fromTarget = this.getClosestVisible(Herbivore)?.body?.position.subtract(this.body?.position || new Vector3());
 					const desiredAngle = fromTarget ? Math.atan2(fromTarget.y, fromTarget.x) : 0;
 					this.turnTo(desiredAngle);
-					this.go(1);
+					this.go(5);
 				}
 			}
 			
@@ -83,7 +83,7 @@ export class Predator extends Creature {
 					const fromTarget = this.getClosestVisible(Predator)?.body?.position.subtract(this.body?.position || new Vector3());
 					const desiredAngle = fromTarget ? Math.atan2(fromTarget.y, fromTarget.x) : 0;
 					this.turnTo(desiredAngle);
-					this.go(1);
+					this.go(5);
 				}
 			}
 		}

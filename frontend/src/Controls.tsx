@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
 	Button,
@@ -6,7 +5,7 @@ import {
 	Tabs,
 	Tab
 } from 'carbon-components-react';
-import { Vector2 } from '@babylonjs/core';
+import { Vector2, Vector3 } from '@babylonjs/core';
 
 import './Controls.scss';
 import { Herbivore } from './world/herbivore';
@@ -16,8 +15,9 @@ import { CreatureConfiguration } from './world/creature';
 import { Utils } from './world/utils';
 
 const randomPosition = (worldSize: Vector2, creatureSize: number) => {
-	return new Vector2(
+	return new Vector3(
 		Math.random() * (worldSize.x - 2 * creatureSize) - (worldSize.x - 2 * creatureSize) / 2,
+		0.1,
 		Math.random() * (worldSize.y - 2 * creatureSize) - (worldSize.y - 2 * creatureSize) / 2
 	);
 };

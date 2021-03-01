@@ -315,7 +315,7 @@ export class Creature {
 	init(creatureConfig: CreatureConfiguration) {
 		if (this.body) {
 			this.body.position.x = creatureConfig.position ? creatureConfig.position.x : 0;
-			this.body.position.z = creatureConfig.position ? creatureConfig.position.y : 0;
+			this.body.position.z = creatureConfig.position ? creatureConfig.position.z : 0;
 		}
 
 		this.maxAge = creatureConfig.maxAge;

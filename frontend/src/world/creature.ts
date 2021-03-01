@@ -158,7 +158,7 @@ export class Creature {
 		// v = at
 		// F = ma
 		// E = F^2 t^2 / (2m)
-		this.energy -= force * force / 3600 / 2 / (this.body?.physicsImpostor?.mass || 1);
+		this.energy -= force * force / 900 / 2 / (this.body?.physicsImpostor?.mass || 1);
 	}
 
 	step() {

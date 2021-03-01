@@ -16,7 +16,7 @@ let world: {current: World | undefined} = { current: undefined };
 
 const onSceneReady = (scene: any) => {
 	// This creates and positions a free camera (non-mesh)
-	const camera = new ArcRotateCamera('camera1', 0, 1, 15, new Vector3(0, 0, 0), scene);
+	const camera = new ArcRotateCamera('camera1', 0, 1, 25, new Vector3(0, 0, 0), scene);
 	camera.maxZ = 150;
 
 	const canvas = scene.getEngine().getRenderingCanvas();

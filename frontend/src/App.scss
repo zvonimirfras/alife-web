@@ -6,6 +6,22 @@ button.bx--btn.bx--btn--icon-only.menu-button {
 	right: 0;
 }
 
+button.bx--btn.bx--btn--icon-only.help-button {
+	position: fixed;
+	top: 0;
+	right: 3rem;
+
+	&.menu-hidden {
+		svg * {
+			fill: white;
+		}
+		
+		&:hover svg * {
+			fill: #161616;
+		}
+	}
+}
+
 .hide-content {
 	overflow: hidden;
 	position: relative;
@@ -52,5 +68,21 @@ button.bx--btn.bx--btn--icon-only.menu-button {
 	
 	&.menu-open {
 		right: 0;
+	}
+}
+
+.show-at-start-checkbox {
+	position: absolute;
+	bottom: 3px;
+	left: 6px;
+}
+
+.hello-modal {
+	h4 {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+	p {
+		margin-bottom: 10px;
 	}
 }
